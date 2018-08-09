@@ -36,7 +36,7 @@ export default (userConfiguration?: IapetusConfigurationType): IapetusType => {
 
   const app = express();
 
-  app.listen(configuration.port, () => {
+  const server = app.listen(configuration.port, () => {
     log.info('Iapetus server is running on port %d', configuration.port);
   });
 
@@ -45,9 +45,9 @@ export default (userConfiguration?: IapetusConfigurationType): IapetusType => {
     res.end(register.metrics());
   });
 
-  console.log(register.metrics());
-
   return {
-
+    stop: async () => {
+      server.close();
+    }
   };
 };
