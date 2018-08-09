@@ -1,0 +1,79 @@
+{
+  "author": {
+    "email": "gajus@gajus.com",
+    "name": "Gajus Kuizinas",
+    "url": "http://gajus.com"
+  },
+  "ava": {
+    "require": [
+      "@babel/register"
+    ]
+  },
+  "dependencies": {
+    "express": "^5.0.0-alpha.6",
+    "prom-client": "^11.1.1",
+    "prometheus-gc-stats": "^0.5.1",
+    "roarr": "^2.3.2",
+    "serialize-error": "^2.1.0"
+  },
+  "description": "Abstracts Prometheus metrics reporting.",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.53",
+    "@babel/core": "^7.0.0-beta.53",
+    "@babel/node": "^7.0.0-beta.53",
+    "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.53",
+    "@babel/preset-env": "^7.0.0-beta.53",
+    "@babel/register": "^7.0.0-beta.53",
+    "ava": "^1.0.0-beta.6",
+    "babel-plugin-istanbul": "^5.0.0",
+    "babel-plugin-transform-export-default-name": "^2.0.4",
+    "coveralls": "^3.0.2",
+    "eslint": "^5.1.0",
+    "eslint-config-canonical": "^11.0.0",
+    "flow-bin": "^0.76.0",
+    "flow-copy-source": "^2.0.1",
+    "gitdown": "^2.5.2",
+    "husky": "^1.0.0-rc.13",
+    "nyc": "^13.0.0",
+    "semantic-release": "^15.7.2"
+  },
+  "engines": {
+    "node": ">6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test && npm run build"
+    }
+  },
+  "keywords": [
+    "kubernetes",
+    "prometheus"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "./dist/index.js",
+  "name": "iapetus",
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "instrument": false,
+    "reporter": [
+      "text-lcov"
+    ],
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/iapetus"
+  },
+  "scripts": {
+    "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps && flow-copy-source src dist",
+    "generate-readme": "gitdown ./.README/README.md --output-file ./README.md",
+    "lint": "eslint ./src ./test && flow",
+    "test": "NODE_ENV=test ava --verbose --serial"
+  },
+  "version": "1.0.0"
+}
