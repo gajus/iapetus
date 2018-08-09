@@ -53,16 +53,19 @@
   "main": "./dist/index.js",
   "name": "iapetus",
   "nyc": {
+    "all": true,
     "include": [
       "src/**/*.js"
     ],
     "instrument": false,
     "reporter": [
-      "text-lcov"
+      "html",
+      "text-summary"
     ],
     "require": [
       "@babel/register"
     ],
+    "silent": true,
     "sourceMap": false
   },
   "repository": {
