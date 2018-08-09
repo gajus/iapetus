@@ -12,6 +12,18 @@ export type CounterMetricType = {|
   +increment: () => void
 |};
 
+export type GaugeMetricConfigurationType = {|
+  +description: string,
+  +labelNames?: $ReadOnlyArray<string>,
+  +name: string
+|};
+
+export type GaugeMetricType = {|
+  +decrement: () => void,
+  +increment: () => void,
+  +set: (value: number) => void
+|};
+
 /**
  * @property port The port on which the Iapetus service listens. This port must be different than your main service port, if any. The default port is 9050.
  */
@@ -39,7 +51,8 @@ type MetricDescriptorType = {|
  * @property stop Stops the Iapetus server.
  */
 export type IapetusType = {|
-  +createCounter: (configuration: CounterMetricConfigurationType) => CounterMetricType,
+  +createCounterMetric: (configuration: CounterMetricConfigurationType) => CounterMetricType,
+  +createGaugeMetric: (configuration: GuageMetricConfigurationType) => GaugeMetricType,
   +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
   +stop: () => Promise<void>
 |};

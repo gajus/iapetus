@@ -39,7 +39,24 @@ type CounterMetricType = {|
 
 #### Gauge
 
-N/A
+A gauge is a metric that represents a single numerical value that can arbitrarily go up and down.
+
+Gauges are typically used for measured values like temperatures or current memory usage, but also "counts" that can go up and down, like the number of running active HTTP requests.
+
+```js
+type GaugeMetricConfigurationType = {|
+  +description: string,
+  +labelNames?: $ReadOnlyArray<string>,
+  +name: string
+|};
+
+type GaugeMetricType = {|
+  +decrement: () => void,
+  +increment: () => void,
+  +set: (value: number) => void
+|};
+
+```
 
 #### Summary
 
@@ -115,7 +132,8 @@ type IapetusConfigurationType = {|
  * @property stop Stops the Iapetus server.
  */
 type IapetusType = {|
-  +createCounter: (configuration: CounterMetricConfigurationType) => CounterMetricType,
+  +createCounterMetric: (configuration: CounterMetricConfigurationType) => CounterMetricType,
+  +createGaugeMetric: (configuration: GuageMetricConfigurationType) => GaugeMetricType,
   +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
   +stop: () => Promise<void>
 |};

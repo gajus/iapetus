@@ -4,6 +4,7 @@ import express from 'express';
 import {
   collectDefaultMetrics,
   Counter,
+  Gauge,
   Registry
 } from 'prom-client';
 import gcStats from 'prometheus-gc-stats';
@@ -48,7 +49,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
   });
 
   return {
-    createCounter: (configuration) => {
+    createCounterMetric: (configuration) => {
       const counter = new Counter({
         help: configuration.description,
         labelNames: configuration.labelNames,
@@ -61,6 +62,28 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       return {
         increment: () => {
           counter.inc();
+        }
+      };
+    },
+    createGaugeMetric: (configuration) => {
+      const gauge = new Gauge({
+        help: configuration.description,
+        labelNames: configuration.labelNames,
+        name: configuration.name,
+        registers: [
+          register
+        ]
+      });
+
+      return {
+        decrement: () => {
+          gauge.inc();
+        },
+        increment: () => {
+          gauge.inc();
+        },
+        set: (value: number) => {
+          gauge.set(value);
         }
       };
     },
