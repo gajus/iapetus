@@ -18,6 +18,7 @@ Abstracts [Prometheus](https://prometheus.io/) metrics reporting.
         * [Kubernetes configuration](#iapetus-usage-kubernetes-configuration)
         * [Logging](#iapetus-usage-logging)
     * [FAQ](#iapetus-faq)
+        * [Where does the name _Iapetus_ come from?](#iapetus-faq-where-does-the-name-_iapetus_-come-from)
         * [What is the difference from `prom-client`?](#iapetus-faq-what-is-the-difference-from-prom-client)
 
 
@@ -129,6 +130,11 @@ Set `ROARR_LOG=true` environment variable to enable logging.
 
 <a name="iapetus-faq"></a>
 ## FAQ
+
+<a name="iapetus-faq-where-does-the-name-_iapetus_-come-from"></a>
+### Where does the name <em>Iapetus</em> come from?
+
+In Greek mythology, [Iapetus](https://en.wikipedia.org/wiki/Iapetus) (/aɪˈæpɪtəs/), was a Titan, the son of Uranus and Gaia, and father of Atlas, Prometheus, Epimetheus and Menoetius.
 
 <a name="iapetus-faq-what-is-the-difference-from-prom-client"></a>
 ### What is the difference from <code>prom-client</code>?

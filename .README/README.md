@@ -111,6 +111,10 @@ Set `ROARR_LOG=true` environment variable to enable logging.
 
 ## FAQ
 
+### Where does the name _Iapetus_ come from?
+
+In Greek mythology, [Iapetus](https://en.wikipedia.org/wiki/Iapetus) (/aɪˈæpɪtəs/), was a Titan, the son of Uranus and Gaia, and father of Atlas, Prometheus, Epimetheus and Menoetius.
+
 ### What is the difference from `prom-client`?
 
 Iapetus is a high-level abstraction of [`prom-client`](https://github.com/siimon/prom-client) with integrated HTTP server and pre-configured [default metrics](#default-metrics).
