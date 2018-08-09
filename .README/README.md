@@ -24,30 +24,30 @@ The following metrics are collected and reported by default:
 
 |Name|Labels|Description|
 |---|---|---|
-|process_cpu_user_seconds_total||Total user CPU time spent in seconds.|
-|process_cpu_system_seconds_total||Total system CPU time spent in seconds.|
-|process_cpu_seconds_total||Total user and system CPU time spent in seconds.|
-|process_start_time_seconds||Start time of the process since unix epoch in seconds.|
-|process_resident_memory_bytes||Resident memory size in bytes.|
-|nodejs_eventloop_lag_seconds||Lag of event loop in seconds.|
-|nodejs_active_handles_total||Number of active handles.|
-|nodejs_active_requests_total||Number of active requests.|
-|nodejs_heap_size_total_bytes||Process heap size from node.js in bytes.|
-|nodejs_heap_size_used_bytes||Process heap size used from node.js in bytes.|
-|nodejs_external_memory_bytes||Nodejs external memory size in bytes.|
-|nodejs_heap_space_size_total_bytes|space|Process heap space size total from node.js in bytes.|
-|nodejs_heap_space_size_used_bytes|space|Process heap space size used from node.js in bytes.|
-|nodejs_heap_space_size_available_bytes|space|Process heap space size available from node.js in bytes.|
-|nodejs_version_info|version, major, minor, patch|Node.js version info.|
-|nodejs_gc_runs_total|gctype|Count of total garbage collections.|
-|nodejs_gc_pause_seconds_total|gctype|Time spent in GC Pause in seconds.|
-|nodejs_gc_reclaimed_bytes_total|gctype|Total number of bytes reclaimed by GC.|
+|`process_cpu_user_seconds_total`||Total user CPU time spent in seconds.|
+|`process_cpu_system_seconds_total`||Total system CPU time spent in seconds.|
+|`process_cpu_seconds_total`||Total user and system CPU time spent in seconds.|
+|`process_start_time_seconds`||Start time of the process since unix epoch in seconds.|
+|`process_resident_memory_bytes`||Resident memory size in bytes.|
+|`nodejs_eventloop_lag_seconds`||Lag of event loop in seconds.|
+|`nodejs_active_handles_total`||Number of active handles.|
+|`nodejs_active_requests_total`||Number of active requests.|
+|`nodejs_heap_size_total_bytes`||Process heap size from node.js in bytes.|
+|`nodejs_heap_size_used_bytes`||Process heap size used from node.js in bytes.|
+|`nodejs_external_memory_bytes`||Nodejs external memory size in bytes.|
+|`nodejs_heap_space_size_total_bytes`|space|Process heap space size total from node.js in bytes.|
+|`nodejs_heap_space_size_used_bytes`|space|Process heap space size used from node.js in bytes.|
+|`nodejs_heap_space_size_available_bytes`|space|Process heap space size available from node.js in bytes.|
+|`nodejs_version_info`|version, major, minor, patch|Node.js version info.|
+|`nodejs_gc_runs_total`|gctype|Count of total garbage collections.|
+|`nodejs_gc_pause_seconds_total`|gctype|Time spent in GC Pause in seconds.|
+|`nodejs_gc_reclaimed_bytes_total`|gctype|Total number of bytes reclaimed by GC.|
 
 <!--
   const metrics = register.getMetricsAsArray();
 
   for (const metric of metrics) {
-    console.log('|' + metric.name + '|' + metric.labelNames.join(', ') + '|' + metric.help + '|');
+    console.log('|`' + metric.name + '`|' + metric.labelNames.join(', ') + '|' + metric.help + '|');
   }
 -->
 
