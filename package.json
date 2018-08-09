@@ -25,6 +25,7 @@
     "@babel/preset-env": "^7.0.0-beta.53",
     "@babel/register": "^7.0.0-beta.53",
     "ava": "^1.0.0-beta.6",
+    "axios": "^0.18.0",
     "babel-plugin-istanbul": "^5.0.0",
     "babel-plugin-transform-export-default-name": "^2.0.4",
     "coveralls": "^3.0.2",
