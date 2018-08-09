@@ -35,6 +35,7 @@
     "flow-copy-source": "^2.0.1",
     "gitdown": "^2.5.2",
     "husky": "^1.0.0-rc.13",
+    "invariant": "^2.2.4",
     "nyc": "^13.0.0",
     "semantic-release": "^15.7.2"
   },

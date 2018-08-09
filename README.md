@@ -30,6 +30,41 @@ Creates a HTTP service on port 9050 (default) with a [`/metrics`](#metrics) endp
 <a name="iapetus-behaviour-user-defined-metrics"></a>
 ### User-defined metrics
 
+There are 4 types of metrics to choose from: counter, gauge, summary and histogram. See the Prometheus documentation on [metric types](https://prometheus.io/docs/concepts/metric_types/) and [best practices](https://prometheus.io/docs/practices/instrumentation/#counter-vs.-gauge,-summary-vs.-histogram) for when to use which.
+
+<a name="iapetus-behaviour-user-defined-metrics-counter"></a>
+#### Counter
+
+A counter is a cumulative metric that represents a single monotonically increasing counter whose value can only increase or be reset to zero on restart. For example, you can use a counter to represent the number of requests served, tasks completed, or errors.
+
+Do not use a counter to expose a value that can decrease. For example, do not use a counter for the number of currently running processes; instead use a gauge.
+
+```js
+type CounterMetricConfigurationType = {|
+  +description: string,
+  +labelNames?: $ReadOnlyArray<string>,
+  +name: string
+|};
+
+type CounterMetricType = {|
+  +increment: () => void
+|};
+
+```
+
+<a name="iapetus-behaviour-user-defined-metrics-gauge"></a>
+#### Gauge
+
+N/A
+
+<a name="iapetus-behaviour-user-defined-metrics-summary"></a>
+#### Summary
+
+N/A
+
+<a name="iapetus-behaviour-user-defined-metrics-histogram"></a>
+#### Histogram
+
 N/A
 
 <a name="iapetus-behaviour-default-metrics"></a>
@@ -101,6 +136,8 @@ type IapetusConfigurationType = {|
  * @property stop Stops the Iapetus server.
  */
 type IapetusType = {|
+  +createCounter: (configuration: CounterMetricConfigurationType) => CounterMetricType,
+  +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
   +stop: () => Promise<void>
 |};
 

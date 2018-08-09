@@ -3,11 +3,13 @@
 import express from 'express';
 import {
   collectDefaultMetrics,
+  Counter,
   Registry
 } from 'prom-client';
 import gcStats from 'prometheus-gc-stats';
 import Logger from '../Logger';
 import type {
+  CounterMetricConfigurationType,
   IapetusConfigurationType,
   IapetusType
 } from '../types';
@@ -16,14 +18,14 @@ const log = Logger.child({
   namespace: 'factories/createIapetus'
 });
 
-const defaultConfiguration = {
+const defaultIapetusConfiguration = {
   port: 9050
 };
 
-export default (userConfiguration?: IapetusConfigurationType): IapetusType => {
-  const configuration = {
-    ...defaultConfiguration,
-    ...userConfiguration
+export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusType => {
+  const iapetusConfiguration = {
+    ...defaultIapetusConfiguration,
+    ...userIapetusConfiguration
   };
 
   const register = new Registry();
@@ -36,8 +38,8 @@ export default (userConfiguration?: IapetusConfigurationType): IapetusType => {
 
   const app = express();
 
-  const server = app.listen(configuration.port, () => {
-    log.info('Iapetus server is running on port %d', configuration.port);
+  const server = app.listen(iapetusConfiguration.port, () => {
+    log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
   });
 
   app.get('/metrics', (req, res) => {
@@ -46,6 +48,34 @@ export default (userConfiguration?: IapetusConfigurationType): IapetusType => {
   });
 
   return {
+    createCounter: (configuration) => {
+      const counter = new Counter({
+        help: configuration.description,
+        labelNames: configuration.labelNames,
+        name: configuration.name,
+        registers: [
+          register
+        ]
+      });
+
+      return {
+        increment: () => {
+          counter.inc();
+        }
+      };
+    },
+    getMetrics: () => {
+      return register
+        .getMetricsAsJSON()
+        .map((metric) => {
+          return {
+            description: metric.help,
+            name: metric.name,
+            type: metric.type,
+            values: metric.values
+          };
+        });
+    },
     stop: async () => {
       server.close();
     }
