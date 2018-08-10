@@ -74,7 +74,7 @@ type MetricDescriptorType = {|
  */
 export type IapetusType = {|
   +createCounterMetric: (configuration: CounterMetricConfigurationType) => CounterMetricType,
-  +createGaugeMetric: (configuration: GuageMetricConfigurationType) => GaugeMetricType,
+  +createGaugeMetric: (configuration: GaugeMetricConfigurationType) => GaugeMetricType,
   +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
   +stop: () => Promise<void>
 |};
