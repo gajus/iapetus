@@ -7,7 +7,7 @@ type LabelsType = {
 };
 
 export type CounterMetricConfigurationType = {|
-  +description: string,
+  +description?: string,
   +labelNames?: $ReadOnlyArray<string>,
   +name: string
 |};
@@ -26,7 +26,7 @@ export type CounterMetricType = {|
 |};
 
 export type GaugeMetricConfigurationType = {|
-  +description: string,
+  +description?: string,
   +labelNames?: $ReadOnlyArray<string>,
   +name: string
 |};

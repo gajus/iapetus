@@ -50,8 +50,8 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
   return {
     createCounterMetric: (configuration) => {
       const counter = new Counter({
-        help: configuration.description,
-        labelNames: configuration.labelNames,
+        help: configuration.description || 'N/A',
+        labelNames: configuration.labelNames || [],
         name: configuration.name,
         registers: [
           register
@@ -70,8 +70,8 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     },
     createGaugeMetric: (configuration) => {
       const gauge = new Gauge({
-        help: configuration.description,
-        labelNames: configuration.labelNames,
+        help: configuration.description || 'N/A',
+        labelNames: configuration.labelNames || [],
         name: configuration.name,
         registers: [
           register
