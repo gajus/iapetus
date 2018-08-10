@@ -33,6 +33,7 @@
     "eslint-config-canonical": "^11.0.0",
     "flow-bin": "^0.78.0",
     "flow-copy-source": "^2.0.2",
+    "get-port": "^4.0.0",
     "gitdown": "^2.5.2",
     "husky": "^1.0.0-rc.13",
     "invariant": "^2.2.4",

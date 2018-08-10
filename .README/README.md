@@ -166,9 +166,9 @@ Add the following annotations to your [Pod](https://kubernetes.io/docs/concepts/
 
 ```yaml
 annotations:
-  prometheus.io/scrape: 'true'
-  prometheus.io/port: '9050'
-  prometheus.io/path: '/metrics'
+  prometheus.io.scrape: 'true'
+  prometheus.io.port: '9050'
+  prometheus.io.path: '/metrics'
 
 ```
 
