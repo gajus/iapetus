@@ -2,14 +2,27 @@
 
 /* eslint-disable import/exports-last */
 
+type LabelsType = {
+  [key: string]: string
+};
+
 export type CounterMetricConfigurationType = {|
   +description: string,
   +labelNames?: $ReadOnlyArray<string>,
   +name: string
 |};
 
+/**
+ * @property timestamp Time in milliseconds.
+ */
+type CounterMetricPayloadType = {|
+  +labels?: LabelsType,
+  +timestamp?: number,
+  +value: number
+|};
+
 export type CounterMetricType = {|
-  +increment: () => void
+  +increment: (payload?: CounterMetricPayloadType) => void
 |};
 
 export type GaugeMetricConfigurationType = {|
@@ -18,10 +31,19 @@ export type GaugeMetricConfigurationType = {|
   +name: string
 |};
 
+/**
+ * @property timestamp Time in milliseconds.
+ */
+type GaugeMetricPayloadType = {|
+  +labels?: LabelsType,
+  +timestamp?: number,
+  +value: number
+|};
+
 export type GaugeMetricType = {|
-  +decrement: () => void,
-  +increment: () => void,
-  +set: (value: number) => void
+  +decrement: (payload?: GaugeMetricPayloadType) => void,
+  +increment: (payload?: GaugeMetricPayloadType) => void,
+  +set: (payload: GaugeMetricPayloadType) => void
 |};
 
 /**

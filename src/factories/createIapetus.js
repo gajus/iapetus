@@ -10,7 +10,6 @@ import {
 import gcStats from 'prometheus-gc-stats';
 import Logger from '../Logger';
 import type {
-  CounterMetricConfigurationType,
   IapetusConfigurationType,
   IapetusType
 } from '../types';
@@ -60,8 +59,12 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       });
 
       return {
-        increment: () => {
-          counter.inc();
+        increment: (payload) => {
+          if (payload) {
+            counter.inc(payload.labels, payload.value, payload.timestamp);
+          } else {
+            counter.inc();
+          }
         }
       };
     },
@@ -76,14 +79,22 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       });
 
       return {
-        decrement: () => {
-          gauge.inc();
+        decrement: (payload) => {
+          if (payload) {
+            gauge.dec(payload.labels, payload.value, payload.timestamp);
+          } else {
+            gauge.dec();
+          }
         },
-        increment: () => {
-          gauge.inc();
+        increment: (payload) => {
+          if (payload) {
+            gauge.inc(payload.labels, payload.value, payload.timestamp);
+          } else {
+            gauge.inc();
+          }
         },
-        set: (value: number) => {
-          gauge.set(value);
+        set: (payload) => {
+          gauge.set(payload.labels, payload.value, payload.timestamp);
         }
       };
     },

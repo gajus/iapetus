@@ -25,14 +25,23 @@ A counter is a cumulative metric that represents a single monotonically increasi
 Do not use a counter to expose a value that can decrease. For example, do not use a counter for the number of currently running processes; instead use a gauge.
 
 ```js
-type CounterMetricConfigurationType = {|
+export type CounterMetricConfigurationType = {|
   +description: string,
   +labelNames?: $ReadOnlyArray<string>,
   +name: string
 |};
 
-type CounterMetricType = {|
-  +increment: () => void
+/**
+ * @property timestamp Time in milliseconds.
+ */
+type CounterMetricPayloadType = {|
+  +labels?: LabelsType,
+  +timestamp?: number,
+  +value: number
+|};
+
+export type CounterMetricType = {|
+  +increment: (payload?: CounterMetricPayloadType) => void
 |};
 
 ```
@@ -44,16 +53,25 @@ A gauge is a metric that represents a single numerical value that can arbitraril
 Gauges are typically used for measured values like temperatures or current memory usage, but also "counts" that can go up and down, like the number of running active HTTP requests.
 
 ```js
-type GaugeMetricConfigurationType = {|
+export type GaugeMetricConfigurationType = {|
   +description: string,
   +labelNames?: $ReadOnlyArray<string>,
   +name: string
 |};
 
-type GaugeMetricType = {|
-  +decrement: () => void,
-  +increment: () => void,
-  +set: (value: number) => void
+/**
+ * @property timestamp Time in milliseconds.
+ */
+type GaugeMetricPayloadType = {|
+  +labels?: LabelsType,
+  +timestamp?: number,
+  +value: number
+|};
+
+export type GaugeMetricType = {|
+  +decrement: (payload?: GaugeMetricPayloadType) => void,
+  +increment: (payload?: GaugeMetricPayloadType) => void,
+  +set: (payload: GaugeMetricPayloadType) => void
 |};
 
 ```
