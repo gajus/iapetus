@@ -1,6 +1,7 @@
 // @flow
 
 import express from 'express';
+import serializeError from 'serialize-error';
 import {
   collectDefaultMetrics,
   Counter,
@@ -38,8 +39,14 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
 
   const app = express();
 
-  const server = app.listen(iapetusConfiguration.port, () => {
-    log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
+  const server = app.listen(iapetusConfiguration.port, (error) => {
+    if (error) {
+      log.error({
+        error: serializeError(error)
+      }, 'an error has occured while starting the HTTP server');
+    } else {
+      log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
+    }
   });
 
   app.get('/metrics', (req, res) => {
