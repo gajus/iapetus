@@ -7,6 +7,7 @@ import createIapetus from '../../../src/factories/createIapetus';
 
 test('creates HTTP server on port 9050 with /metrics endpoint', async (t) => {
   const port = await getPort();
+
   const iapetus = await createIapetus({
     port
   });
