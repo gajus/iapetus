@@ -16,7 +16,7 @@
     "roarr": "^2.8.0",
     "serialize-error": "^2.1.0"
   },
-  "description": "Abstracts Prometheus metrics reporting.",
+  "description": "Prometheus metrics server.",
   "devDependencies": {
     "@babel/cli": "^7.0.0-rc.1",
     "@babel/core": "^7.0.0-rc.1",

@@ -6,7 +6,7 @@
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 [![Twitter Follow](https://img.shields.io/twitter/follow/kuizinas.svg?style=social&label=Follow)](https://twitter.com/kuizinas)
 
-Abstracts [Prometheus](https://prometheus.io/) metrics reporting.
+[Prometheus](https://prometheus.io/) metrics server.
 
 {"gitdown": "contents"}
 
