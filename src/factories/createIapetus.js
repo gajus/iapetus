@@ -50,6 +50,8 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
   });
 
   app.get('/metrics', (req, res) => {
+    log.debug('Iapetus served /metrics to %s', req.ip);
+
     res.set('content-type', register.contentType);
     res.end(register.metrics());
   });
