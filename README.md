@@ -20,6 +20,7 @@
     * [FAQ](#iapetus-faq)
         * [Where does the name _Iapetus_ come from?](#iapetus-faq-where-does-the-name-_iapetus_-come-from)
         * [What is the difference from `prom-client`?](#iapetus-faq-what-is-the-difference-from-prom-client)
+    * [Related projects](#iapetus-related-projects)
 
 
 <a name="iapetus-behaviour"></a>
@@ -213,3 +214,8 @@ In Greek mythology, [Iapetus](https://en.wikipedia.org/wiki/Iapetus) (/aɪˈæp�
 ### What is the difference from <code>prom-client</code>?
 
 Iapetus is a high-level abstraction of [`prom-client`](https://github.com/siimon/prom-client) with integrated HTTP server and pre-configured [default metrics](#default-metrics).
+
+<a name="iapetus-related-projects"></a>
+## Related projects
+
+* [Lightship](https://github.com/gajus/lightship) – Abstracts readiness/ liveness checks and graceful shutdown of Node.js services running in Kubernetes.

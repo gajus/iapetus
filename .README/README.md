@@ -187,3 +187,7 @@ In Greek mythology, [Iapetus](https://en.wikipedia.org/wiki/Iapetus) (/aɪˈæp�
 ### What is the difference from `prom-client`?
 
 Iapetus is a high-level abstraction of [`prom-client`](https://github.com/siimon/prom-client) with integrated HTTP server and pre-configured [default metrics](#default-metrics).
+
+## Related projects
+
+* [Lightship](https://github.com/gajus/lightship) – Abstracts readiness/ liveness checks and graceful shutdown of Node.js services running in Kubernetes.
