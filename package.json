@@ -19,26 +19,26 @@
   "description": "Prometheus metrics server.",
   "devDependencies": {
     "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.2.0",
-    "@babel/node": "^7.2.0",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
     "@babel/plugin-transform-flow-strip-types": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
     "@babel/register": "^7.0.0",
-    "ava": "^1.0.0-beta.6",
+    "ava": "^1.0.1",
     "axios": "^0.19.0-beta.1",
     "babel-plugin-istanbul": "^5.1.0",
     "babel-plugin-transform-export-default-name": "^2.0.4",
     "coveralls": "^3.0.2",
     "eslint": "^5.10.0",
     "eslint-config-canonical": "^15.0.1",
-    "flow-bin": "^0.87.0",
+    "flow-bin": "^0.89.0",
     "flow-copy-source": "^2.0.2",
     "get-port": "^4.0.0",
     "gitdown": "^2.5.5",
-    "husky": "^1.2.0",
+    "husky": "^1.2.1",
     "invariant": "^2.2.4",
     "nyc": "^13.1.0",
-    "semantic-release": "^15.12.4"
+    "semantic-release": "^15.13.1"
   },
   "engines": {
     "node": ">10"
