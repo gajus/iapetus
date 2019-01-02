@@ -191,3 +191,4 @@ Iapetus is a high-level abstraction of [`prom-client`](https://github.com/siimon
 ## Related projects
 
 * [Lightship](https://github.com/gajus/lightship) – Abstracts readiness/ liveness checks and graceful shutdown of Node.js services running in Kubernetes.
+* [Preoom](https://github.com/gajus/preoom) – Retrieves & observes Kubernetes Pod resource (CPU, memory) utilisation.
