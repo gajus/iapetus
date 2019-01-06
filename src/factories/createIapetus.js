@@ -120,7 +120,15 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
         });
     },
     stop: async () => {
-      server.close();
+      return new Promise((resolve, reject) => {
+        server.close((error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve();
+          }
+        });
+      });
     }
   };
 };
