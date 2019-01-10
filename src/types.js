@@ -47,9 +47,11 @@ export type GaugeMetricType = {|
 |};
 
 /**
+ * @property detectKubernetes Run Iapetus only if service is detected ro be running in Kubernetes. Default: true.
  * @property port The port on which the Iapetus service listens. This port must be different than your main service port, if any. The default port is 9050.
  */
 export type IapetusConfigurationType = {|
+  +detectKubernetes?: boolean,
   +port?: number
 |};
 

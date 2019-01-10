@@ -14,6 +14,10 @@
 
 Creates a HTTP service on port 9050 (default) with a [`/metrics`](#metrics) endpoint exposing [default metrics](#default-metrics) and [user-defined metrics](#user-defined-metrics).
 
+### No-op in non-Kubernetes execution context
+
+The default behaviour is that all Iapetus operations become no-op if Iapetus detects that it is running in a non-Kubernetes environment (e.g. your local machine). This behaviour can be changed using `detectKubernetes` configuration.
+
 ### User-defined metrics
 
 There are 4 types of metrics to choose from: counter, gauge, summary and histogram. See the Prometheus documentation on [metric types](https://prometheus.io/docs/concepts/metric_types/) and [best practices](https://prometheus.io/docs/practices/instrumentation/#counter-vs.-gauge,-summary-vs.-histogram) for when to use which.
@@ -140,9 +144,11 @@ The following types describe the configuration shape and the resulting Iapetus i
 
 ```js
 /**
+ * @property detectKubernetes Run Iapetus only if service is detected ro be running in Kubernetes. Default: true.
  * @property port The port on which the Iapetus service listens. This port must be different than your main service port, if any. The default port is 9050.
  */
 type IapetusConfigurationType = {|
+  +detectKubernetes?: boolean,
   +port?: number
 |};
 

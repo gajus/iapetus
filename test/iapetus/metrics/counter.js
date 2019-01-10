@@ -11,6 +11,7 @@ test('increment() increments metric', async (t) => {
   const port = await getPort();
 
   const iapetus = createIapetus({
+    detectKubernetes: false,
     port
   });
 

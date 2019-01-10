@@ -10,6 +10,9 @@ import {
 } from 'prom-client';
 import gcStats from 'prometheus-gc-stats';
 import Logger from '../Logger';
+import {
+  isKubernetes
+} from '../utilities';
 import type {
   IapetusConfigurationType,
   IapetusType
@@ -20,6 +23,7 @@ const log = Logger.child({
 });
 
 const defaultIapetusConfiguration = {
+  detectKubernetes: true,
   port: 9050
 };
 
@@ -28,6 +32,29 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     ...defaultIapetusConfiguration,
     ...userIapetusConfiguration
   };
+
+  if (iapetusConfiguration.detectKubernetes === true && isKubernetes() === false) {
+    log.warn('Iapetus could not detect Kubernetes; operating in a no-op mode');
+
+    return {
+      createCounterMetric: () => {
+        return {
+          increment: () => {}
+        };
+      },
+      createGaugeMetric: () => {
+        return {
+          decrement: () => {},
+          increment: () => {},
+          set: () => {}
+        };
+      },
+      getMetrics: () => {
+        return [];
+      },
+      stop: async () => {}
+    };
+  }
 
   const register = new Registry();
 

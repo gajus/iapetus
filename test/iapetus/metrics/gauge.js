@@ -11,6 +11,7 @@ test('increment() increments metric value', async (t) => {
   const port = await getPort();
 
   const iapetus = createIapetus({
+    detectKubernetes: false,
     port
   });
 
@@ -44,6 +45,7 @@ test('decrement() decrements metric value', async (t) => {
   const port = await getPort();
 
   const iapetus = createIapetus({
+    detectKubernetes: false,
     port
   });
 
@@ -77,6 +79,7 @@ test('set() sets a specific metric value', async (t) => {
   const port = await getPort();
 
   const iapetus = createIapetus({
+    detectKubernetes: false,
     port
   });
 

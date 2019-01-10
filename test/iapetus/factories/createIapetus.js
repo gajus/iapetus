@@ -9,6 +9,7 @@ test('creates HTTP server with /metrics endpoint', async (t) => {
   const port = await getPort();
 
   const iapetus = await createIapetus({
+    detectKubernetes: false,
     port
   });
 

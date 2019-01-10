@@ -10,7 +10,7 @@ const assertCounterMetricValue = (t, iapetus, matricName, value) => {
       return maybeMetric.name === matricName;
     });
 
-  invariant(metric, 'matric not found');
+  invariant(metric, 'metric not found');
 
   t.true(metric.name === 'foo');
   t.true(metric.values.length === 1);
@@ -25,7 +25,7 @@ const assertGuageMetricValue = (t, iapetus, matricName, value) => {
       return maybeMetric.name === matricName;
     });
 
-  invariant(metric, 'matric not found');
+  invariant(metric, 'metric not found');
 
   t.true(metric.name === 'foo');
   t.true(metric.values.length === 1);
