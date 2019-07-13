@@ -97,7 +97,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       return {
         increment: (payload) => {
           if (payload) {
-            counter.inc(payload.labels || {}, payload.value, payload.timestamp);
+            counter.inc(payload.labels || {}, payload.value, payload.timestamp || Date.now());
           } else {
             counter.inc();
           }
@@ -117,20 +117,20 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       return {
         decrement: (payload) => {
           if (payload) {
-            gauge.dec(payload.labels || {}, payload.value, payload.timestamp);
+            gauge.dec(payload.labels || {}, payload.value, payload.timestamp || Date.now());
           } else {
             gauge.dec();
           }
         },
         increment: (payload) => {
           if (payload) {
-            gauge.inc(payload.labels || {}, payload.value, payload.timestamp);
+            gauge.inc(payload.labels || {}, payload.value, payload.timestamp || Date.now());
           } else {
             gauge.inc();
           }
         },
         set: (payload) => {
-          gauge.set(payload.labels || {}, payload.value, payload.timestamp);
+          gauge.set(payload.labels || {}, payload.value, payload.timestamp || Date.now());
         }
       };
     },
