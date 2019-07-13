@@ -11,10 +11,12 @@
 
 * [Iapetus 🔱](#iapetus)
     * [Behaviour](#iapetus-behaviour)
+        * [No-op in non-Kubernetes execution context](#iapetus-behaviour-no-op-in-non-kubernetes-execution-context)
         * [User-defined metrics](#iapetus-behaviour-user-defined-metrics)
         * [Default metrics](#iapetus-behaviour-default-metrics)
         * [`/metrics`](#iapetus-behaviour-metrics)
     * [Usage](#iapetus-usage)
+        * [Example](#iapetus-usage-example)
         * [Kubernetes configuration](#iapetus-usage-kubernetes-configuration)
         * [Logging](#iapetus-usage-logging)
     * [FAQ](#iapetus-faq)
@@ -27,6 +29,11 @@
 ## Behaviour
 
 Creates a HTTP service on port 9050 (default) with a [`/metrics`](#metrics) endpoint exposing [default metrics](#default-metrics) and [user-defined metrics](#user-defined-metrics).
+
+<a name="iapetus-behaviour-no-op-in-non-kubernetes-execution-context"></a>
+### No-op in non-Kubernetes execution context
+
+The default behaviour is that all Iapetus operations become no-op if Iapetus detects that it is running in a non-Kubernetes environment (e.g. your local machine). This behaviour can be changed using `detectKubernetes` configuration.
 
 <a name="iapetus-behaviour-user-defined-metrics"></a>
 ### User-defined metrics
@@ -162,9 +169,11 @@ The following types describe the configuration shape and the resulting Iapetus i
 
 ```js
 /**
+ * @property detectKubernetes Run Iapetus only if service is detected ro be running in Kubernetes. Default: true.
  * @property port The port on which the Iapetus service listens. This port must be different than your main service port, if any. The default port is 9050.
  */
 type IapetusConfigurationType = {|
+  +detectKubernetes?: boolean,
   +port?: number
 |};
 
@@ -177,6 +186,25 @@ type IapetusType = {|
   +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
   +stop: () => Promise<void>
 |};
+
+```
+
+<a name="iapetus-usage-example"></a>
+### Example
+
+```js
+const iapetus = createIapetus();
+
+const iapetusMetrics = {
+  activeRequestCount: iapetus.createGaugeMetric({
+    description: 'Active request count',
+    labelNames: [],
+    name: 'activeRequestCount'
+  })
+};
+
+// Increase `activeRequestCount` value by 1.
+iapetusMetrics.activeRequestCount.increment();
 
 ```
 
@@ -219,3 +247,4 @@ Iapetus is a high-level abstraction of [`prom-client`](https://github.com/siimon
 ## Related projects
 
 * [Lightship](https://github.com/gajus/lightship) – Abstracts readiness/ liveness checks and graceful shutdown of Node.js services running in Kubernetes.
+* [Preoom](https://github.com/gajus/preoom) – Retrieves & observes Kubernetes Pod resource (CPU, memory) utilisation.
