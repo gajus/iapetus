@@ -164,6 +164,24 @@ type IapetusType = {|
 
 ```
 
+### Example
+
+```js
+const iapetus = createIapetus();
+
+const iapetusMetrics = {
+  activeRequestCount: iapetus.createGaugeMetric({
+    description: 'Active request count',
+    labelNames: [],
+    name: 'activeRequestCount'
+  })
+};
+
+// Increase `activeRequestCount` value by 1.
+iapetusMetrics.activeRequestCount.increment();
+
+```
+
 ### Kubernetes configuration
 
 > This section assumes that you have installed Prometheus using Helm [Prometheus chart](https://github.com/helm/charts/tree/master/stable/prometheus).
