@@ -76,11 +76,11 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     }
   });
 
-  app.get('/metrics', (req, res) => {
-    log.debug('Iapetus served /metrics to %s', req.ip);
+  app.get('/metrics', (request, response) => {
+    log.debug('Iapetus served /metrics to %s', request.ip);
 
-    res.set('content-type', register.contentType);
-    res.end(register.metrics());
+    response.set('content-type', register.contentType);
+    response.end(register.metrics());
   });
 
   return {

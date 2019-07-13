@@ -56,7 +56,7 @@ export type IapetusConfigurationType = {|
 |};
 
 type MeasurementType = {|
-  +value: mixed,
+  +value: *,
   +labels: {
     [name: string]: string
   },
