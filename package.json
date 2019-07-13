@@ -43,7 +43,7 @@
     "flow-bin": "^0.102.0",
     "flow-copy-source": "^2.0.7",
     "get-port": "^5.0.0",
-    "gitdown": "^2.6.1",
+    "gitdown": "^2.6.2",
     "husky": "^3.0.0",
     "invariant": "^2.2.4",
     "nyc": "^14.1.1",
