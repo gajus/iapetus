@@ -37,6 +37,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     log.warn('Iapetus could not detect Kubernetes; operating in a no-op mode');
 
     return {
+      register: null,
       createCounterMetric: () => {
         return {
           increment: () => {}
@@ -84,6 +85,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
   });
 
   return {
+    register,
     createCounterMetric: (configuration) => {
       const counter = new Counter({
         help: configuration.description || 'N/A',
