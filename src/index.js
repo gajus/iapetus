@@ -2,5 +2,5 @@
 
 export {default as createIapetus} from './factories/createIapetus';
 export type {
-  IapetusType
+  IapetusType,
 } from './types';

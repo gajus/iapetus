@@ -3,13 +3,14 @@
 /* eslint-disable import/exports-last */
 
 type LabelsType = {
-  [key: string]: string
+  [key: string]: string,
+  ...,
 };
 
 export type CounterMetricConfigurationType = {|
   +description?: string,
   +labelNames?: $ReadOnlyArray<string>,
-  +name: string
+  +name: string,
 |};
 
 /**
@@ -18,17 +19,17 @@ export type CounterMetricConfigurationType = {|
 type CounterMetricPayloadType = {|
   +labels?: LabelsType,
   +timestamp?: number,
-  +value: number
+  +value: number,
 |};
 
 export type CounterMetricType = {|
-  +increment: (payload?: CounterMetricPayloadType) => void
+  +increment: (payload?: CounterMetricPayloadType) => void,
 |};
 
 export type GaugeMetricConfigurationType = {|
   +description?: string,
   +labelNames?: $ReadOnlyArray<string>,
-  +name: string
+  +name: string,
 |};
 
 /**
@@ -37,13 +38,13 @@ export type GaugeMetricConfigurationType = {|
 type GaugeMetricPayloadType = {|
   +labels?: LabelsType,
   +timestamp?: number,
-  +value: number
+  +value: number,
 |};
 
 export type GaugeMetricType = {|
   +decrement: (payload?: GaugeMetricPayloadType) => void,
   +increment: (payload?: GaugeMetricPayloadType) => void,
-  +set: (payload: GaugeMetricPayloadType) => void
+  +set: (payload: GaugeMetricPayloadType) => void,
 |};
 
 /**
@@ -52,15 +53,16 @@ export type GaugeMetricType = {|
  */
 export type IapetusConfigurationType = {|
   +detectKubernetes?: boolean,
-  +port?: number
+  +port?: number,
 |};
 
 type MeasurementType = {|
   +value: *,
   +labels: {
-    [name: string]: string
+    [name: string]: string,
+    ...,
   },
-  +timestamp?: number
+  +timestamp?: number,
 |};
 
 // @todo Add labelNames.
@@ -68,7 +70,7 @@ type MetricDescriptorType = {|
   +description: string,
   +name: string,
   +type: 'counter' | 'gauge' | 'histogram' | 'summary',
-  +values: $ReadOnlyArray<MeasurementType>
+  +values: $ReadOnlyArray<MeasurementType>,
 |};
 
 /**
@@ -78,5 +80,5 @@ export type IapetusType = {|
   +createCounterMetric: (configuration: CounterMetricConfigurationType) => CounterMetricType,
   +createGaugeMetric: (configuration: GaugeMetricConfigurationType) => GaugeMetricType,
   +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
-  +stop: () => Promise<void>
+  +stop: () => Promise<void>,
 |};

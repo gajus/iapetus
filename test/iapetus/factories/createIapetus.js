@@ -10,7 +10,7 @@ test('creates HTTP server with /metrics endpoint', async (t) => {
 
   const iapetus = await createIapetus({
     detectKubernetes: false,
-    port
+    port,
   });
 
   const response = await axios('http://127.0.0.1:' + port + '/metrics');

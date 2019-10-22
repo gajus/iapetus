@@ -6,31 +6,31 @@ import {
   collectDefaultMetrics,
   Counter,
   Gauge,
-  Registry
+  Registry,
 } from 'prom-client';
 import gcStats from 'prometheus-gc-stats';
 import Logger from '../Logger';
 import {
-  isKubernetes
+  isKubernetes,
 } from '../utilities';
 import type {
   IapetusConfigurationType,
-  IapetusType
+  IapetusType,
 } from '../types';
 
 const log = Logger.child({
-  namespace: 'factories/createIapetus'
+  namespace: 'factories/createIapetus',
 });
 
 const defaultIapetusConfiguration = {
   detectKubernetes: true,
-  port: 9050
+  port: 9050,
 };
 
 export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusType => {
   const iapetusConfiguration = {
     ...defaultIapetusConfiguration,
-    ...userIapetusConfiguration
+    ...userIapetusConfiguration,
   };
 
   if (iapetusConfiguration.detectKubernetes === true && isKubernetes() === false) {
@@ -39,27 +39,27 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     return {
       createCounterMetric: () => {
         return {
-          increment: () => {}
+          increment: () => {},
         };
       },
       createGaugeMetric: () => {
         return {
           decrement: () => {},
           increment: () => {},
-          set: () => {}
+          set: () => {},
         };
       },
       getMetrics: () => {
         return [];
       },
-      stop: async () => {}
+      stop: async () => {},
     };
   }
 
   const register = new Registry();
 
   collectDefaultMetrics({
-    register
+    register,
   });
 
   gcStats(register)();
@@ -69,7 +69,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
   const server = app.listen(iapetusConfiguration.port, (error) => {
     if (error) {
       log.error({
-        error: serializeError(error)
+        error: serializeError(error),
       }, 'an error has occured while starting the HTTP server');
     } else {
       log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
@@ -90,8 +90,8 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
         labelNames: configuration.labelNames || [],
         name: configuration.name,
         registers: [
-          register
-        ]
+          register,
+        ],
       });
 
       return {
@@ -101,7 +101,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
           } else {
             counter.inc();
           }
-        }
+        },
       };
     },
     createGaugeMetric: (configuration) => {
@@ -110,8 +110,8 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
         labelNames: configuration.labelNames || [],
         name: configuration.name,
         registers: [
-          register
-        ]
+          register,
+        ],
       });
 
       return {
@@ -131,7 +131,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
         },
         set: (payload) => {
           gauge.set(payload.labels || {}, payload.value, payload.timestamp);
-        }
+        },
       };
     },
     getMetrics: () => {
@@ -142,7 +142,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
             description: metric.help,
             name: metric.name,
             type: metric.type,
-            values: metric.values
+            values: metric.values,
           };
         });
     },
@@ -156,6 +156,6 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
           }
         });
       });
-    }
+    },
   };
 };

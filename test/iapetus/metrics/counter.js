@@ -3,7 +3,7 @@
 import test from 'ava';
 import getPort from 'get-port';
 import {
-  assertCounterMetricValue
+  assertCounterMetricValue,
 } from '../../helpers';
 import createIapetus from '../../../src/factories/createIapetus';
 
@@ -12,12 +12,12 @@ test('increment() increments metric', async (t) => {
 
   const iapetus = createIapetus({
     detectKubernetes: false,
-    port
+    port,
   });
 
   const fooCounter = iapetus.createCounterMetric({
     description: 'foo',
-    name: 'foo'
+    name: 'foo',
   });
 
   assertCounterMetricValue(t, iapetus, 'foo', 0);
@@ -27,13 +27,13 @@ test('increment() increments metric', async (t) => {
   assertCounterMetricValue(t, iapetus, 'foo', 1);
 
   fooCounter.increment({
-    value: 1
+    value: 1,
   });
 
   assertCounterMetricValue(t, iapetus, 'foo', 2);
 
   fooCounter.increment({
-    value: 2
+    value: 2,
   });
 
   assertCounterMetricValue(t, iapetus, 'foo', 4);

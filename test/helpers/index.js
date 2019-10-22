@@ -34,5 +34,5 @@ const assertGuageMetricValue = (t, iapetus, matricName, value) => {
 
 export {
   assertCounterMetricValue,
-  assertGuageMetricValue
+  assertGuageMetricValue,
 };

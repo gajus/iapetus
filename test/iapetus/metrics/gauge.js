@@ -3,7 +3,7 @@
 import test from 'ava';
 import getPort from 'get-port';
 import {
-  assertGuageMetricValue
+  assertGuageMetricValue,
 } from '../../helpers';
 import createIapetus from '../../../src/factories/createIapetus';
 
@@ -12,12 +12,12 @@ test('increment() increments metric value', async (t) => {
 
   const iapetus = createIapetus({
     detectKubernetes: false,
-    port
+    port,
   });
 
   const fooGauge = iapetus.createGaugeMetric({
     description: 'foo',
-    name: 'foo'
+    name: 'foo',
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', 0);
@@ -27,13 +27,13 @@ test('increment() increments metric value', async (t) => {
   assertGuageMetricValue(t, iapetus, 'foo', 1);
 
   fooGauge.increment({
-    value: 1
+    value: 1,
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', 2);
 
   fooGauge.increment({
-    value: 2
+    value: 2,
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', 4);
@@ -46,12 +46,12 @@ test('decrement() decrements metric value', async (t) => {
 
   const iapetus = createIapetus({
     detectKubernetes: false,
-    port
+    port,
   });
 
   const fooGauge = iapetus.createGaugeMetric({
     description: 'foo',
-    name: 'foo'
+    name: 'foo',
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', 0);
@@ -61,13 +61,13 @@ test('decrement() decrements metric value', async (t) => {
   assertGuageMetricValue(t, iapetus, 'foo', -1);
 
   fooGauge.decrement({
-    value: 1
+    value: 1,
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', -2);
 
   fooGauge.decrement({
-    value: 2
+    value: 2,
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', -4);
@@ -80,24 +80,24 @@ test('set() sets a specific metric value', async (t) => {
 
   const iapetus = createIapetus({
     detectKubernetes: false,
-    port
+    port,
   });
 
   const fooGauge = iapetus.createGaugeMetric({
     description: 'foo',
-    name: 'foo'
+    name: 'foo',
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', 0);
 
   fooGauge.set({
-    value: 3
+    value: 3,
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', 3);
 
   fooGauge.set({
-    value: -3
+    value: -3,
   });
 
   assertGuageMetricValue(t, iapetus, 'foo', -3);
