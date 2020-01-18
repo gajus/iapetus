@@ -4,7 +4,7 @@
 
 type LabelsType = {
   [key: string]: string,
-  ...,
+  ...
 };
 
 export type CounterMetricConfigurationType = {|
@@ -60,7 +60,7 @@ type MeasurementType = {|
   +value: *,
   +labels: {
     [name: string]: string,
-    ...,
+    ...
   },
   +timestamp?: number,
 |};

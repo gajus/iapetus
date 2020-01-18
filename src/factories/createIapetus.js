@@ -70,7 +70,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     if (error) {
       log.error({
         error: serializeError(error),
-      }, 'an error has occured while starting the HTTP server');
+      }, 'an error has occurred while starting the HTTP server');
     } else {
       log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
     }
