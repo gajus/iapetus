@@ -2,7 +2,9 @@
 
 import express from 'express';
 import serializeError from 'serialize-error';
-import httpClose from 'http-close';
+import {
+  createHttpTerminator,
+} from 'http-terminator';
 import {
   collectDefaultMetrics,
   Counter,
@@ -77,7 +79,9 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     }
   });
 
-  httpClose(server);
+  const httpTerminator = createHttpTerminator({
+    server,
+  });
 
   app.get('/metrics', (request, response) => {
     log.debug('Iapetus served /metrics to %s', request.ip);
@@ -150,15 +154,7 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
         });
     },
     stop: async () => {
-      return new Promise((resolve, reject) => {
-        server.close((error) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
-      });
+      await httpTerminator.terminate();
     },
   };
 };
