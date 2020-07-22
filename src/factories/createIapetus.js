@@ -1,7 +1,9 @@
 // @flow
 
 import express from 'express';
-import serializeError from 'serialize-error';
+import {
+  serializeError,
+} from 'serialize-error';
 import {
   createHttpTerminator,
 } from 'http-terminator';
