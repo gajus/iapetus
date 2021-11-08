@@ -1,6 +1,6 @@
 # Iapetus 🔱
 
-[![Travis build status](http://img.shields.io/travis/gajus/iapetus/master.svg?style=flat-square)](https://travis-ci.org/gajus/iapetus)
+[![Travis build status](http://img.shields.io/travis/gajus/iapetus/master.svg?style=flat-square)](https://travis-ci.com/github/gajus/iapetus)
 [![Coveralls](https://img.shields.io/coveralls/gajus/iapetus.svg?style=flat-square)](https://coveralls.io/github/gajus/iapetus)
 [![NPM version](http://img.shields.io/npm/v/iapetus.svg?style=flat-square)](https://www.npmjs.org/package/iapetus)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
@@ -157,7 +157,7 @@ type IapetusConfigurationType = {|
  */
 type IapetusType = {|
   +createCounterMetric: (configuration: CounterMetricConfigurationType) => CounterMetricType,
-  +createGaugeMetric: (configuration: GuageMetricConfigurationType) => GaugeMetricType,
+  +createGaugeMetric: (configuration: GaugeMetricConfigurationType) => GaugeMetricType,
   +getMetrics: () => $ReadOnlyArray<MetricDescriptorType>,
   +stop: () => Promise<void>
 |};
@@ -215,4 +215,4 @@ Iapetus is a high-level abstraction of [`prom-client`](https://github.com/siimon
 ## Related projects
 
 * [Lightship](https://github.com/gajus/lightship) – Abstracts readiness/ liveness checks and graceful shutdown of Node.js services running in Kubernetes.
-* [Preoom](https://github.com/gajus/preoom) – Retrieves & observes Kubernetes Pod resource (CPU, memory) utilisation.
+* [Preoom](https://github.com/gajus/preoom) – Retrieves & observes Kubernetes Pod resource (CPU, memory) utilization.

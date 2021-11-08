@@ -1,9 +1,4 @@
-// @flow
-
 import express from 'express';
-import {
-  serializeError,
-} from 'serialize-error';
 import {
   createHttpTerminator,
 } from 'http-terminator';
@@ -14,14 +9,17 @@ import {
   Registry,
 } from 'prom-client';
 import gcStats from 'prometheus-gc-stats';
+import {
+  serializeError,
+} from 'serialize-error';
 import Logger from '../Logger';
+import type {
+  IapetusConfiguration,
+  Iapetus,
+} from '../types';
 import {
   isKubernetes,
 } from '../utilities';
-import type {
-  IapetusConfigurationType,
-  IapetusType,
-} from '../types';
 
 const log = Logger.child({
   namespace: 'factories/createIapetus',
@@ -29,10 +27,10 @@ const log = Logger.child({
 
 const defaultIapetusConfiguration = {
   detectKubernetes: true,
-  port: 9050,
+  port: 9_050,
 };
 
-export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusType => {
+export const createIapetus = (userIapetusConfiguration?: IapetusConfiguration): Iapetus => {
   const iapetusConfiguration = {
     ...defaultIapetusConfiguration,
     ...userIapetusConfiguration,
@@ -44,20 +42,30 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     return {
       createCounterMetric: () => {
         return {
-          increment: () => {},
+          increment: () => {
+            // Do nothing.
+          },
         };
       },
       createGaugeMetric: () => {
         return {
-          decrement: () => {},
-          increment: () => {},
-          set: () => {},
+          decrement: () => {
+            // Do nothing.
+          },
+          increment: () => {
+            // Do nothing.
+          },
+          set: () => {
+            // Do nothing.
+          },
         };
       },
-      getMetrics: () => {
+      getMetrics: async () => {
         return [];
       },
-      stop: async () => {},
+      stop: async () => {
+        // Do nothing.
+      },
     };
   }
 
@@ -71,32 +79,39 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
 
   const app = express();
 
-  const server = app.listen(iapetusConfiguration.port, (error) => {
-    if (error) {
-      log.error({
-        error: serializeError(error),
-      }, 'an error has occurred while starting the HTTP server');
-    } else {
-      log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
-    }
+  const server = app.listen(iapetusConfiguration.port, () => {
+    log.info('Iapetus server is running on port %d', iapetusConfiguration.port);
+  });
+
+  server.on('error', (error) => {
+    log.error({
+      error: serializeError(error),
+    }, 'an error has occurred while starting the HTTP server');
   });
 
   const httpTerminator = createHttpTerminator({
     server,
   });
 
-  app.get('/metrics', (request, response) => {
+  app.get('/metrics', (request, response, next) => {
     log.debug('Iapetus served /metrics to %s', request.ip);
 
     response.set('content-type', register.contentType);
-    response.end(register.metrics());
+
+    register.metrics()
+      .then((metrics) => {
+        response.end(metrics);
+      })
+      .catch((error) => {
+        next(error);
+      });
   });
 
   return {
     createCounterMetric: (configuration) => {
       const counter = new Counter({
-        help: configuration.description || 'N/A',
-        labelNames: configuration.labelNames || [],
+        help: configuration.description ?? 'N/A',
+        labelNames: configuration.labelNames ?? [],
         name: configuration.name,
         registers: [
           register,
@@ -106,7 +121,10 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       return {
         increment: (payload) => {
           if (payload) {
-            counter.inc(payload.labels || {}, payload.value, payload.timestamp);
+            counter.inc(
+              payload.labels ?? {},
+              payload.value,
+            );
           } else {
             counter.inc();
           }
@@ -115,8 +133,8 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
     },
     createGaugeMetric: (configuration) => {
       const gauge = new Gauge({
-        help: configuration.description || 'N/A',
-        labelNames: configuration.labelNames || [],
+        help: configuration.description ?? 'N/A',
+        labelNames: configuration.labelNames ?? [],
         name: configuration.name,
         registers: [
           register,
@@ -126,31 +144,45 @@ export default (userIapetusConfiguration?: IapetusConfigurationType): IapetusTyp
       return {
         decrement: (payload) => {
           if (payload) {
-            gauge.dec(payload.labels || {}, payload.value, payload.timestamp);
+            gauge.dec(
+              payload.labels ?? {},
+              payload.value,
+            );
           } else {
             gauge.dec();
           }
         },
         increment: (payload) => {
           if (payload) {
-            gauge.inc(payload.labels || {}, payload.value, payload.timestamp);
+            gauge.inc(
+              payload.labels ?? {},
+              payload.value,
+            );
           } else {
             gauge.inc();
           }
         },
         set: (payload) => {
-          gauge.set(payload.labels || {}, payload.value, payload.timestamp);
+          gauge.set(
+            payload.labels ?? {},
+            payload.value,
+          );
         },
       };
     },
-    getMetrics: () => {
-      return register
-        .getMetricsAsJSON()
+
+    // @ts-expect-error Type mismatch
+    getMetrics: async () => {
+      const metrics = await register.getMetricsAsJSON();
+
+      return metrics
         .map((metric) => {
           return {
             description: metric.help,
             name: metric.name,
             type: metric.type,
+
+            // @ts-expect-error Type mismatch
             values: metric.values,
           };
         });

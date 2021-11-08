@@ -1,11 +1,11 @@
-// @flow
-
 import test from 'ava';
 import getPort from 'get-port';
 import {
-  assertGuageMetricValue,
+  createIapetus,
+} from '../../../src/factories/createIapetus';
+import {
+  assertGaugeMetricValue,
 } from '../../helpers';
-import createIapetus from '../../../src/factories/createIapetus';
 
 test('increment() increments metric value', async (t) => {
   const port = await getPort();
@@ -20,23 +20,23 @@ test('increment() increments metric value', async (t) => {
     name: 'foo',
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', 0);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 0);
 
   fooGauge.increment();
 
-  assertGuageMetricValue(t, iapetus, 'foo', 1);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 1);
 
   fooGauge.increment({
     value: 1,
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', 2);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 2);
 
   fooGauge.increment({
     value: 2,
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', 4);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 4);
 
   await iapetus.stop();
 });
@@ -54,23 +54,23 @@ test('decrement() decrements metric value', async (t) => {
     name: 'foo',
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', 0);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 0);
 
   fooGauge.decrement();
 
-  assertGuageMetricValue(t, iapetus, 'foo', -1);
+  await assertGaugeMetricValue(t, iapetus, 'foo', -1);
 
   fooGauge.decrement({
     value: 1,
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', -2);
+  await assertGaugeMetricValue(t, iapetus, 'foo', -2);
 
   fooGauge.decrement({
     value: 2,
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', -4);
+  await assertGaugeMetricValue(t, iapetus, 'foo', -4);
 
   await iapetus.stop();
 });
@@ -88,19 +88,19 @@ test('set() sets a specific metric value', async (t) => {
     name: 'foo',
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', 0);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 0);
 
   fooGauge.set({
     value: 3,
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', 3);
+  await assertGaugeMetricValue(t, iapetus, 'foo', 3);
 
   fooGauge.set({
     value: -3,
   });
 
-  assertGuageMetricValue(t, iapetus, 'foo', -3);
+  await assertGaugeMetricValue(t, iapetus, 'foo', -3);
 
   await iapetus.stop();
 });
